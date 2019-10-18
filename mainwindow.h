@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
+#include "controllermanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +17,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void gamepadViewSetup();
+
+private slots:
+    void gamepadState(QVariant data);
+
 private:
     Ui::MainWindow *ui;
+    ControllerManager *m_controllerManager;
 };
 #endif // MAINWINDOW_H
