@@ -13,18 +13,13 @@ ControllerManager::ControllerManager(QObject *parent) : QObject(parent), m_gamep
     connect(m_controllerUpdateTimer, SIGNAL(timeout()), this, SLOT(controllerStateUpdate()));
     m_controllerUpdateTimer->setInterval((1000/CONTROLLER_UPDATE_FREQUENCY));
     m_controllerUpdateTimer->start();
-
-    memset(&mcState, 0, sizeof(minimalControllerState));
-
-    qDebug() << "SizeOf(" << sizeof(minimalControllerState) << ")";
-
-
 }
 
 void ControllerManager::tryConnect() {
     if(m_gamepad != nullptr) return;
 
     auto gamepads = QGamepadManager::instance()->connectedGamepads();
+
     if (gamepads.isEmpty()) {
         return;
     }
@@ -55,14 +50,13 @@ uint8_t mapValue(double x) {
     return val;
 }
 
-void ControllerManager::convertControllerStateToMinimalControllerState(minimalControllerState *mcs) {
-
-    uint8_t lx = mapValue(this->cState.leftXAxis);
-    uint8_t ly = mapValue(this->cState.leftYAxis);
-    uint8_t rx = mapValue(this->cState.rightXAxis);
-    uint8_t ry = mapValue(this->cState.rightYAxis);
-    uint8_t lt = ceil(this->cState.ltTrigger*255);
-    uint8_t rt = ceil(this->cState.rtTrigger*255);
+void ControllerManager::convertToArray(uint8_t *data, uint8_t *len) {
+    data[0] = mapValue(this->cState.leftXAxis);     //lx
+    data[1] = mapValue(this->cState.leftYAxis);     //ly
+    data[2] = mapValue(this->cState.rightXAxis);    //rx
+    data[3] = mapValue(this->cState.rightYAxis);    //ry
+    data[4] = ceil(this->cState.ltTrigger*255);     //lt
+    data[5] = ceil(this->cState.rtTrigger*255);     //rt
     uint16_t btn = 0;
 
     btn |= this->cState.buttonA   << buttons::a;
@@ -76,27 +70,16 @@ void ControllerManager::convertControllerStateToMinimalControllerState(minimalCo
     btn |= this->cState.rbButton  << buttons::rb;
     btn |= this->cState.lbButton  << buttons::lb;
 
-    mcs->leftXAxis = lx;
-    mcs->leftYAxis = ly;
-    mcs->rightXAxis = rx;
-    mcs->rightYAxis = ry;
-    mcs->ltTrigger = lt;
-    mcs->rtTrigger = rt;
-
-    mcs->buttons = btn;
+    btn = (btn << 8) + (btn >> 8);
+    memcpy(&data[5], &btn, 2);
+    *len = 8;
 }
 
 void ControllerManager::controllerStateUpdate() {
     QVariant data;
     data.setValue(this->cState);
     emit controllerStateChanged(data);
-
-    convertControllerStateToMinimalControllerState(&mcState);
-
-
     // TODO: Send button struct when needed
-
-
 }
 
 ControllerManager::~ControllerManager()

@@ -32,6 +32,7 @@ struct controllerState {
 };
 
 extern "C" {
+/*
     struct minimalControllerState {
         uint8_t leftXAxis;
         uint8_t leftYAxis;
@@ -42,7 +43,7 @@ extern "C" {
 
         uint16_t buttons;
     };
-
+*/
     enum buttons {
         a = 0,
         b,
@@ -65,7 +66,7 @@ class ControllerManager : public QObject
     Q_OBJECT
 public:
     explicit ControllerManager(QObject *parent = nullptr);
-    void convertControllerStateToMinimalControllerState(minimalControllerState *mcs);
+    void convertToArray(uint8_t *data, uint8_t *len);
     ~ControllerManager();
 signals:
     void controllerStateChanged(QVariant data);
@@ -79,7 +80,6 @@ private:
     QTimer *m_connectTimer;
     QTimer *m_controllerUpdateTimer;
     controllerState cState;
-    minimalControllerState mcState;
 };
 
 #endif // CONTROLLERMANAGER_H
