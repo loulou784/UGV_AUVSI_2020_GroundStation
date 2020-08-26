@@ -42,6 +42,7 @@ SOURCES += \
     tcpcommunicationmanager.cpp
 
 HEADERS += \
+    DataTypes.h \
     communicationmanager.h \
     controllermanager.h \
     mainwindow.h \

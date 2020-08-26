@@ -5,6 +5,8 @@ CommunicationManager::CommunicationManager(QObject *parent) : QObject(parent)
     reset();
     connect(this, SIGNAL(newMessageToProcess(uint8_t*, uint8_t)), this, SLOT(processMessage(uint8_t*, uint8_t)));
 
+    lastHeartbeat = 0;
+    currentHeartbeat = 0;
 
     // Start Serial communication if not on IOS
 #ifndef Q_OS_IOS
@@ -50,25 +52,14 @@ void CommunicationManager::processChar(uint8_t ch) {
         if(ch == START_BYTE) {
             reset();
             dataBuffer[currentLength] = ch;
-            currentState = commSM::TARGET;
+            currentState = commSM::VID;
             currentLength++;
         }
         break;
 
-    case commSM::TARGET:
-        // Directed to ME
-        if(ch == MY_ID) {
-            dataBuffer[currentLength] = ch;
-            currentState = commSM::SOURCE;
-            currentLength++;
-        } else {
-            currentState = commSM::START;
-        }
-        break;
+    case commSM::VID:
 
-    case commSM::SOURCE:
-        // From someone I trust
-        if(ch == TARGET_ID) {
+        if(ch == MY_VID) {
             dataBuffer[currentLength] = ch;
             currentState = commSM::COMMAND;
             currentLength++;
@@ -148,9 +139,35 @@ void CommunicationManager::sendBytes(uint8_t* data, uint8_t len) {
 
 void CommunicationManager::processMessage(uint8_t *arr, uint8_t len) {
     // Dispatch received message
-    qDebug() << "New Message: ";
-    for(int i = 0; i < len; i++) {
-        qDebug() << "0x" << hex << arr[i];
+
+    //Config struct incoming (On request)
+    if(arr[2] == 0x10) {
+        oConfig_t receivedConfig;
+        if(arr[3] == sizeof(receivedConfig)) {
+            memcpy(&receivedConfig, &arr[4], sizeof(receivedConfig));
+            emit receivedConfigData(receivedConfig);
+            return;
+        }
+
+    }
+
+    //Heartbeat uint32_t incoming (1 Hz)
+    if(arr[2] == 0x04) {
+        if(arr[3] == 0x04) {
+            lastHeartbeat = currentHeartbeat;
+            currentHeartbeat = (arr[4] << 24) + (arr[5] << 16) + (arr[6] << 8) + arr[7];
+            emit receivedHeartbeat(currentHeartbeat, lastHeartbeat);
+            return;
+        }
+    }
+
+    //Raw sensor data incoming (10 Hz default)
+    if(arr[2] == 0x08) {
+        oRawData_t rawData;
+        if(arr[3] == sizeof(rawData)) {
+            memcpy(&rawData, &arr[4], sizeof(rawData));
+            emit receivedRawData(rawData);
+        }
     }
 }
 
@@ -164,7 +181,7 @@ void CommunicationManager::stopTCPComm() {
 }
 
 void CommunicationManager::sendControllerData(uint8_t *data, uint8_t len) {
-
+/*
     uint8_t toSend[7 + len];
     toSend[0] = START_BYTE;
     toSend[1] = TARGET_ID;
@@ -182,6 +199,19 @@ void CommunicationManager::sendControllerData(uint8_t *data, uint8_t len) {
         dbg << hex << toSend[i];
     }
     dbg << "  CRC16:" << calculateCRC16(toSend, sizeof(toSend));
+*/
+}
+
+void CommunicationManager::sendReadParamCommand() {
+    uint8_t toSend[6];
+    toSend[0] = START_BYTE;     //START
+    toSend[1] = 0x01;           //VID
+    toSend[2] = 0x12;           //CMD
+    toSend[3] = 0x00;           //PLL
+
+    uint16_t crc = calculateCRC16(toSend, sizeof(toSend) - 2);
+    memcpy(&toSend[4], &crc, sizeof(crc));
+    sendBytes(toSend, sizeof(toSend));
 }
 
 #ifndef Q_OS_IOS

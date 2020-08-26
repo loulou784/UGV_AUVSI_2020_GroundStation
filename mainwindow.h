@@ -8,6 +8,7 @@
 #include <qflightinstruments/WidgetHSI.h>
 #include <QFileDialog>
 #include "controllermanager.h"
+#include "DataTypes.h"
 #include "communicationmanager.h"
 
 #ifndef Q_OS_IOS
@@ -28,6 +29,7 @@ public:
     ~MainWindow();
 
     void gamepadViewSetup();
+    void paramViewSetup();
 
 private slots:
     void gamepadState(QVariant data);
@@ -38,12 +40,18 @@ private slots:
     void openFirmwareFilePicker();
     void connectTCP();
     void connectSerial();
-
+    void writeParamToVehicule();
+    void readParamFromVehicule();
+    void heartbeatChanged(uint32_t current, uint32_t previous);
+    void rawDataChanged(oRawData_t data);
+    void configDataChanged(oConfig_t data);
 
 private:
     Ui::MainWindow *ui;
     ControllerManager *m_controllerManager;
     CommunicationManager *m_communicationManager;
+    oRawData_t rawData;
+    oConfig_t configData;
     WidgetADI *m_widgetADI;
     WidgetHSI *m_widgetHSI;
 };

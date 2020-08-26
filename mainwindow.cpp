@@ -32,11 +32,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->SerialDisconnectButton, SIGNAL(clicked()), m_communicationManager, SLOT(stopSerialComm()));
 #endif
 
-    ui->statusbar->showMessage("Hello World!");
-
     tabChanged(5);
     connect(ui->tabView, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 
+    connect(m_communicationManager, SIGNAL(receivedHeartbeat(uint32_t, uint32_t)), this, SLOT(heartbeatChanged(uint32_t, uint32_t)));
+    connect(m_communicationManager, SIGNAL(receivedRawData(oRawData_t)), this, SLOT(rawDataChanged(oRawData_t)));
+    connect(m_communicationManager, SIGNAL(receivedConfigData(oConfig_t)), this, SLOT(configDataChanged(oConfig_t)));
+
+    paramViewSetup();
     gamepadViewSetup();
 }
 
@@ -47,6 +50,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::gamepadViewSetup() {
     connect(m_controllerManager, SIGNAL(controllerStateChanged(QVariant)), this, SLOT(gamepadState(QVariant)));
+}
+
+void MainWindow::paramViewSetup() {
+    connect(ui->paramWriteParamButton, SIGNAL(clicked()), this, SLOT(writeParamToVehicule()));
+    connect(ui->paramReadButton, SIGNAL(clicked()), this, SLOT(readParamFromVehicule()));
+
 }
 
 void MainWindow::gamepadState(QVariant data) {
@@ -168,4 +177,74 @@ void MainWindow::connectSerial() {
 #ifndef Q_OS_IOS
     m_communicationManager->startSerialComm(ui->serialPortComboBox->currentText(), ui->baudRateComboBox->currentText().toInt());
 #endif
+}
+
+void MainWindow::writeParamToVehicule() {
+    oConfig_t configToSend;
+    configToSend.fReleaseAltitude = float(ui->param_fReleaseAltitude->value());
+    configToSend.fArmingAltitude = float(ui->param_fArmingAltitude->value());
+    configToSend.fHardReleaseAltitude = float(ui->param_fHardReleaseAltitude->value());
+    configToSend.fSoftReleaseAltitude = float(ui->param_fSoftReleaseAltitude->value());
+    configToSend.fTargetRadius = float(ui->param_fTargetRadius->value());
+    configToSend.fTargetLat = float(ui->param_fTargetLat->value());
+    configToSend.fTargetLong = float(ui->param_fTargetLong->value());
+
+    configToSend.u16HardReleaseCountdown = uint16_t(ui->param_u16HardReleaseCountdown->value());
+    configToSend.u16SoftReleaseCountdown = uint16_t(ui->param_u16SoftReleaseCountdown->value());
+    configToSend.u16MaxSpeed = uint16_t(ui->param_u16MaxSpeed->value());
+    configToSend.u16HeartbeatTransmitInterval = uint16_t(ui->param_u16HeartbeatTransmitInterval->value());
+    configToSend.u16SensorTransmitInterval = uint16_t(ui->param_u16SensorTransmitInterval->value());
+    configToSend.u8VID = uint8_t(ui->param_u8VID->value());
+    configToSend.bSound = bool(ui->param_bSound->isChecked());
+    configToSend.bExternalTelemetry = bool(ui->param_bExternalTelemetry->isChecked());
+
+}
+
+void MainWindow::heartbeatChanged(uint32_t current, uint32_t previous) {
+    if(ui->statusbar->currentMessage().contains("🔵")) {
+        ui->statusbar->showMessage("📡 Elapsed: " + QString::number(current - previous) + " ms");
+    } else {
+        ui->statusbar->showMessage("📡 Elapsed: " + QString::number(current - previous) + " ms  🔵");
+    }
+}
+
+void MainWindow::rawDataChanged(oRawData_t data) {
+    this->rawData = data;
+    ui->statPitchLabel->setText("Pitch: " + QString::number(rawData.BNO055Data.dPitch));
+    ui->statRollLabel->setText("Roll: " + QString::number(rawData.BNO055Data.dRoll));
+    ui->statHeadingLabel->setText("Heading: " + QString::number(rawData.BNO055Data.dYaw));
+    ui->statLatLabel->setText("Lat: " + QString::number(rawData.CAMM8QData.fLatitude));
+    ui->statLongLabel->setText("Long: " + QString::number(rawData.CAMM8QData.fLongitude));
+    this->m_widgetHSI->setHeading(rawData.BNO055Data.dYaw);
+    this->m_widgetADI->setRoll(rawData.BNO055Data.dRoll);
+    this->m_widgetADI->setPitch(rawData.BNO055Data.dPitch);
+
+
+    this->m_widgetHSI->update();
+    this->m_widgetADI->update();
+}
+
+void MainWindow::configDataChanged(oConfig_t data) {
+    this->configData = data;
+    ui->param_fReleaseAltitude->setValue(configData.fReleaseAltitude);
+    ui->param_fArmingAltitude->setValue(configData.fArmingAltitude);
+    ui->param_fHardReleaseAltitude->setValue(configData.fHardReleaseAltitude);
+    ui->param_fSoftReleaseAltitude->setValue(configData.fSoftReleaseAltitude);
+    ui->param_fTargetRadius->setValue(configData.fTargetRadius);
+    ui->param_fTargetLat->setValue(configData.fTargetLat);
+    ui->param_fTargetLong->setValue(configData.fTargetLong);
+
+    ui->param_u16HardReleaseCountdown->setValue(configData.u16HardReleaseCountdown);
+    ui->param_u16SoftReleaseCountdown->setValue(configData.u16SoftReleaseCountdown);
+    ui->param_u16MaxSpeed->setValue(configData.u16MaxSpeed);
+    ui->param_u16HeartbeatTransmitInterval->setValue(configData.u16HeartbeatTransmitInterval);
+    ui->param_u16SensorTransmitInterval->setValue(configData.u16SensorTransmitInterval);
+    ui->param_u8VID->setValue(configData.u8VID);
+    ui->param_bSound->setChecked(configData.bSound == 1);
+    ui->param_bExternalTelemetry->setChecked(configData.bExternalTelemetry == 1);
+}
+
+void MainWindow::readParamFromVehicule() {
+    //Send read param command to vehicule
+    m_communicationManager->sendReadParamCommand();
 }

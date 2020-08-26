@@ -7,37 +7,18 @@
 #include <stdint.h>
 #include <math.h>
 #include "tcpcommunicationmanager.h"
+#include "DataTypes.h"
 
 #ifndef Q_OS_IOS
 #include "serialcommunicationmanager.h"
 #endif
 
-#define TARGET_ID   0x42            // ID to talk to
-#define MY_ID       0x00            // My own ID
-#define START_BYTE  0xAB
-
-extern "C" {
-    enum CMD {
-        CONTROLLER = 0,             // Contains controller data
-        READPARAM,                  // Reads the UGV Parameter
-        WRITEPARAM,                 // Sends the UGV Parameter
-        MODE,                       // Sets the UGV Mode
-        BOOTLOADER,                 // Reboots to bootloader
-        CHECKSUM,                   // Verify code checksum
-        WRITE,                      // Write x amount of byte
-        ERASE,                      // Erase x amount of byte
-        READ,                       // Reads x number of byte
-        JUMP,                       // Jump to user address
-        STATUS,                     // Reply of a command
-        PING,                       // PING Request
-        PONG                        // PONG Reply
-    };
-}
+#define MY_VID 0x01
+#define START_BYTE  0x16
 
 enum commSM {
     START = 0,
-    TARGET,
-    SOURCE,
+    VID,
     COMMAND,
     LENGTH,
     PAYLOAD,
@@ -45,8 +26,7 @@ enum commSM {
 };
 
 // START_BYTE           --  1 byte
-// TARGET_ID            --  1 byte
-// SOURCE_ID            --  1 byte
+// VID_ID               --  1 byte
 // COMMAND              --  1 byte
 // PAYLOAD_LENGTH       --  1 byte
 // PAYLOAD              --  [0 to 248] bytes
@@ -72,11 +52,15 @@ private slots:
 signals:
     void newMessageToProcess(uint8_t *arr, uint8_t len);
     void connectionChanged(bool isSerial, bool isConnected);
+    void receivedHeartbeat(uint32_t current, uint32_t previous);
+    void receivedRawData(oRawData_t rawData);
+    void receivedConfigData(oConfig_t configData);
 
 public slots:
     void startTCPComm(QString host, quint16 port);
     void stopTCPComm();
     void sendControllerData(uint8_t *data, uint8_t len);
+    void sendReadParamCommand();
 
 
 #ifndef Q_OS_IOS
@@ -93,6 +77,8 @@ private:
     uint8_t currentLength = 0;
     bool isSerialConnected = false;
     bool isTCPConnected = false;
+    uint32_t lastHeartbeat;
+    uint32_t currentHeartbeat;
 
     TCPCommunicationManager *m_tcpCommunicationManager;
 #ifndef Q_OS_IOS
