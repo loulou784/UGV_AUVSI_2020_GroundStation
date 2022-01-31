@@ -59,7 +59,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "qflightinstruments/qfi_PFD.h"
+#include "QFlightInstruments/qfi_PFD.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -96,7 +96,7 @@ qfi_PFD::qfi_PFD( QWidget * parent ) :
     reset();
 
     m_scene = new QGraphicsScene( this );
-    m_scene->setBackgroundBrush(QBrush(QColor(252,252,252,255), Qt::SolidPattern));
+    //m_scene->setBackgroundBrush(QBrush(QColor(227,227,227,255), Qt::SolidPattern));
     setScene( m_scene );
 
     m_scene->clear();
@@ -107,6 +107,8 @@ qfi_PFD::qfi_PFD( QWidget * parent ) :
     m_hsi = new HSI( m_scene );
     m_vsi = new VSI( m_scene );
     m_ils = new ILS( m_scene );
+
+    this->setStyleSheet("border: none;");
 
     init();
 }

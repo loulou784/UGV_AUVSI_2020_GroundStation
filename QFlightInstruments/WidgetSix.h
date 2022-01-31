@@ -52,12 +52,12 @@
 
 #include <QWidget>
 
-#include "qflightinstruments/WidgetADI.h"
-#include "qflightinstruments/WidgetALT.h"
-#include "qflightinstruments/WidgetASI.h"
-#include "qflightinstruments/WidgetHSI.h"
-#include "qflightinstruments/WidgetTC.h"
-#include "qflightinstruments/WidgetVSI.h"
+#include "QFlightInstruments/WidgetADI.h"
+#include "QFlightInstruments/WidgetALT.h"
+#include "QFlightInstruments/WidgetASI.h"
+#include "QFlightInstruments/WidgetHSI.h"
+#include "QFlightInstruments/WidgetTC.h"
+#include "QFlightInstruments/WidgetVSI.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 

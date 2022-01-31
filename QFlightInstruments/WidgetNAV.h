@@ -52,7 +52,7 @@
 
 #include <QWidget>
 
-#include <qflightinstruments/qfi_NAV.h>
+#include <QFlightInstruments/qfi_NAV.h>
 
 #include "LayoutSquare.h"
 

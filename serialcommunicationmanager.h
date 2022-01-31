@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDebug>
 
-#ifndef Q_OS_IOS
+#if !defined(Q_OS_IOS) && !defined(Q_OS_WASM)
 #include <QSerialPort>
 #include <QSerialPortInfo>
 

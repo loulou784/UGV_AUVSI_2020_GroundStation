@@ -1,14 +1,17 @@
 #ifndef CONTROLLERMANAGER_H
 #define CONTROLLERMANAGER_H
 
-#define CONTROLLER_UPDATE_FREQUENCY 10
+#define CONTROLLER_UPDATE_FREQUENCY 5
 
 #include <QObject>
-#include <QGamepad>
 #include <QDebug>
+
+#if !defined(Q_OS_WASM)
+#include <QGamepad>
 #include <QTimer>
 #include <stdint.h>
 #include <math.h>
+#include "DataTypes.h"
 
 
 struct controllerState {
@@ -32,18 +35,6 @@ struct controllerState {
 };
 
 extern "C" {
-/*
-    struct minimalControllerState {
-        uint8_t leftXAxis;
-        uint8_t leftYAxis;
-        uint8_t rightXAxis;
-        uint8_t rightYAxis;
-        uint8_t ltTrigger;
-        uint8_t rtTrigger;
-
-        uint16_t buttons;
-    };
-*/
     enum buttons {
         a = 0,
         b,
@@ -81,5 +72,6 @@ private:
     QTimer *m_controllerUpdateTimer;
     controllerState cState;
 };
+#endif
 
 #endif // CONTROLLERMANAGER_H

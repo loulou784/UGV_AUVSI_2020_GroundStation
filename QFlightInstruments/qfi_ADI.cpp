@@ -57,7 +57,7 @@
 
 #include <math.h>
 
-#include "qflightinstruments/qfi_ADI.h"
+#include "QFlightInstruments/qfi_ADI.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,10 +98,12 @@ qfi_ADI::qfi_ADI( QWidget *parent ) :
     reset();
 
     m_scene = new QGraphicsScene( this );
-    m_scene->setBackgroundBrush(QBrush(QColor(252,252,252,255), Qt::SolidPattern));
+    //m_scene->setBackgroundBrush(QBrush(QColor(255,0,0,0), Qt::SolidPattern));
     setScene( m_scene );
 
     m_scene->clear();
+
+    this->setStyleSheet("border: none;");
 
     init();
 }

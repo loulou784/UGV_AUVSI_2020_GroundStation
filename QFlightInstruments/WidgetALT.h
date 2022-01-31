@@ -52,7 +52,7 @@
 
 #include <QWidget>
 
-#include <qflightinstruments/qfi_ALT.h>
+#include <QFlightInstruments/qfi_ALT.h>
 
 #include "LayoutSquare.h"
 

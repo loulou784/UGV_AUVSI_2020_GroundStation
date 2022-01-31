@@ -49,7 +49,7 @@
 #define WIDGETPFD_CPP
 #endif
 
-#include "qflightinstruments/WidgetPFD.h"
+#include "QFlightInstruments/WidgetPFD.h"
 #include "ui_WidgetPFD.h"
 
 ////////////////////////////////////////////////////////////////////////////////

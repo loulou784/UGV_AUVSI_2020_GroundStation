@@ -9,10 +9,51 @@
 #include "tcpcommunicationmanager.h"
 #include "DataTypes.h"
 
-#ifndef Q_OS_IOS
+#if !defined(Q_OS_IOS) && !defined(Q_OS_WASM)
 #include "serialcommunicationmanager.h"
 #endif
 
+//CommManager available command
+#define BNO055DATA_CMD 0x01
+#define BNO055DATA_LEN (sizeof(oHeartbeatData_t))
+
+#define CAMM8QDATA_CMD 0x02
+#define CAMM8QDATA_LEN (sizeof(oCAMM8QData_t))
+
+#define BME280DATA_CMD 0x03
+#define BME280DATA_LEN (sizeof(oBME280Data_t))
+
+#define RAWDATA_CMD 0x04
+#define RAWDATA_LEN (sizeof(oRawData_t))
+
+#define VEHICULEDATA_CMD 0x05
+#define VEHICULEDATA_LEN (sizeof(oVehiculeData_t))
+
+#define CONFIGDATA_CMD 0x06
+#define CONFIGDATA_LEN (sizeof(oConfig_t))
+
+#define HEARTBEAT_CMD 0x07
+#define HEARTBEAT_LEN (sizeof(oHeartbeatData_t))
+
+#define MOTORSPEED_CMD 0x07
+#define MOTORSPEED_LEN (sizeof(oMotorSpeedData_t))
+
+#define READPARAM_CMD 0x08
+#define READPARAM_LEN (0x00)
+
+#define SETMODE_CMD 0x09
+#define SETMODE_LEN (0x01)
+
+#define SETESTOP_CMD 0x0A
+#define SETESTOP_LEN (0x01)
+
+#define SETRESETALT_CMD 0x0B
+#define SETRESETALT_LEN (0x01)
+
+#define SETRELEASE_CMD 0x0C
+#define SETRELEASE_LEN (0x01)
+
+// CommManager parameter
 #define MY_VID 0x01
 #define START_BYTE  0x16
 
@@ -55,15 +96,20 @@ signals:
     void receivedHeartbeat(uint32_t current, uint32_t previous);
     void receivedRawData(oRawData_t rawData);
     void receivedConfigData(oConfig_t configData);
+    void receivedBNO055Data(oBNO055Data_t BNO055Data);
+    void receivedCAQMM8QData(oCAMM8QData_t CAMM8QData);
+    void receivedBME280Data(oBME280Data_t BME280Data);
+    void receivedVehiculeData(oVehiculeData_t VehiculeData);
 
 public slots:
     void startTCPComm(QString host, quint16 port);
     void stopTCPComm();
     void sendControllerData(uint8_t *data, uint8_t len);
     void sendReadParamCommand();
+    void sendCommand(uint8_t cmd, uint8_t payload[], uint8_t len);
 
 
-#ifndef Q_OS_IOS
+#if !defined(Q_OS_IOS) && !defined(Q_OS_WASM)
     void startSerialComm(QString port, int baud);
     void stopSerialComm();
     QList<QSerialPortInfo> listSerialPort();
@@ -81,7 +127,7 @@ private:
     uint32_t currentHeartbeat;
 
     TCPCommunicationManager *m_tcpCommunicationManager;
-#ifndef Q_OS_IOS
+#if !defined(Q_OS_IOS) && !defined(Q_OS_WASM)
     SerialCommunicationManager *m_serialCommunicationManager;
 #endif
 };

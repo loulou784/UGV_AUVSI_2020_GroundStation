@@ -1,8 +1,9 @@
-QT       += core gui gamepad network serialport svg
-
+QT       += core gui network svg serialport gamepad
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++11 sdk_no_version_check
+
+TARGET = "UGV_GroundStation"
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -39,7 +40,9 @@ SOURCES += \
     qflightinstruments/qfi_TC.cpp \
     qflightinstruments/qfi_VSI.cpp \
     serialcommunicationmanager.cpp \
-    tcpcommunicationmanager.cpp
+    tcpcommunicationmanager.cpp \
+    tcpvideowidget.cpp \
+    websocketvideowidget.cpp
 
 HEADERS += \
     DataTypes.h \
@@ -65,7 +68,9 @@ HEADERS += \
     qflightinstruments/qfi_TC.h \
     qflightinstruments/qfi_VSI.h \
     serialcommunicationmanager.h \
-    tcpcommunicationmanager.h
+    tcpcommunicationmanager.h \
+    tcpvideowidget.h \
+    websocketvideowidget.h
 
 FORMS += \
     mainwindow.ui \
@@ -92,5 +97,21 @@ ios {
     HEADERS -= serialcommunicationmanager.h
 }
 
+wasm {
+    message(Building WASM)
+    QT -= serialport \
+        gamepad
+
+    SOURCES -= serialcommunicationmanager.cpp \
+            controllermanager.cpp \
+
+    HEADERS -= serialcommunicationmanager.h
+            controllermanager.h \
+}
+
+RESOURCES += qdarkstyle/style.qrc
+
 RESOURCES += \
     qflightinstruments/qfi.qrc
+
+macx: ICON = SmallRoundedGroundStation.icns

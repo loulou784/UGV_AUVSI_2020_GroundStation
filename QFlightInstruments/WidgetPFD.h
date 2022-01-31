@@ -53,7 +53,7 @@
 
 #include <QWidget>
 
-#include <qflightinstruments/qfi_PFD.h>
+#include <QFlightInstruments/qfi_PFD.h>
 
 #include "LayoutSquare.h"
 

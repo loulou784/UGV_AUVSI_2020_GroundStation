@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
-    <height>447</height>
+    <width>610</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,8 +23,18 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
+        <widget class="QWidget" name="tab_7">
+         <attribute name="title">
+          <string>Camera</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_17">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_8"/>
+          </item>
+         </layout>
+        </widget>
         <widget class="QWidget" name="tab">
          <attribute name="title">
           <string>Control</string>
@@ -33,14 +43,14 @@
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_15">
             <item row="3" column="1">
-             <widget class="QPushButton" name="pushButton_6">
+             <widget class="QPushButton" name="resetAltitudeButton">
               <property name="text">
                <string>Reset Altitude</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QPushButton" name="pushButton_5">
+             <widget class="QPushButton" name="estopButton">
               <property name="text">
                <string>E-Stop</string>
               </property>
@@ -71,28 +81,28 @@
                    <item>
                     <widget class="QLabel" name="statPitchLabel">
                      <property name="text">
-                      <string>Pitch</string>
+                      <string>Pitch:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statRollLabel">
                      <property name="text">
-                      <string>Roll</string>
+                      <string>Roll:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statHeadingLabel">
                      <property name="text">
-                      <string>Heading</string>
+                      <string>Heading:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statAltitudeLabel">
                      <property name="text">
-                      <string>Altitude</string>
+                      <string>Altitude:</string>
                      </property>
                     </widget>
                    </item>
@@ -103,28 +113,28 @@
                    <item>
                     <widget class="QLabel" name="statLatLabel">
                      <property name="text">
-                      <string>Lat</string>
+                      <string>Lat:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statLongLabel">
                      <property name="text">
-                      <string>Long</string>
+                      <string>Long:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statBearingLabel">
                      <property name="text">
-                      <string>Bearing</string>
+                      <string>Bearing:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statDistanceLabel">
                      <property name="text">
-                      <string>Distance</string>
+                      <string>Distance:</string>
                      </property>
                     </widget>
                    </item>
@@ -135,28 +145,28 @@
                    <item>
                     <widget class="QLabel" name="statBatteryLabel">
                      <property name="text">
-                      <string>Battery</string>
+                      <string>Battery:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statGPSSpeedLabel">
                      <property name="text">
-                      <string>GPS Speed</string>
+                      <string>Speed:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statLeftSpeedLabel">
                      <property name="text">
-                      <string>LeftSpeed</string>
+                      <string>LeftSpeed:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="statRightSpeedLabel">
                      <property name="text">
-                      <string>RightSpeed</string>
+                      <string>RightSpeed:</string>
                      </property>
                     </widget>
                    </item>
@@ -168,14 +178,14 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="switchModeButton">
               <property name="text">
                <string>Switch Mode</string>
               </property>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QPushButton" name="pushButton_7">
+             <widget class="QPushButton" name="releaseButton">
               <property name="text">
                <string>Release</string>
               </property>
@@ -188,7 +198,7 @@
              <layout class="QVBoxLayout" name="adiLayout"/>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_17">
+             <widget class="QLabel" name="modeLabel">
               <property name="text">
                <string>Teleop</string>
               </property>
@@ -205,6 +215,15 @@
          <attribute name="title">
           <string>Sensor</string>
          </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QTreeView" name="sensorTreeView">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
         <widget class="QWidget" name="tab_3">
          <attribute name="title">
@@ -215,9 +234,15 @@
            <layout class="QGridLayout" name="gridLayout_2">
             <item row="1" column="4">
              <widget class="QPushButton" name="paramWriteParamButton">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
-                <width>120</width>
+                <width>150</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -228,9 +253,15 @@
             </item>
             <item row="1" column="3">
              <widget class="QPushButton" name="paramReadButton">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
-                <width>120</width>
+                <width>150</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -635,447 +666,6 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_4">
-         <attribute name="title">
-          <string>OTA Update</string>
-         </attribute>
-         <layout class="QGridLayout" name="gridLayout_14">
-          <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_13">
-            <item row="2" column="1">
-             <widget class="QPushButton" name="pushButton_3">
-              <property name="text">
-               <string>Upload Firmware</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="firmwareSelectButton">
-              <property name="text">
-               <string>Select File</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLineEdit" name="firmwarePath">
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QTextEdit" name="textEdit">
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="tab_5">
-         <attribute name="title">
-          <string>Joystick</string>
-         </attribute>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <item row="0" column="1">
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="6" column="0" rowspan="4">
-               <widget class="QDial" name="dPad">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>360</number>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-                <property name="wrapping">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Left Stick Y</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="3">
-               <widget class="QLabel" name="label_4">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Right Stick Y</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="3">
-               <layout class="QGridLayout" name="gridLayout_6">
-                <item row="0" column="0">
-                 <widget class="QLCDNumber" name="lcdRightY">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
-                  </property>
-                  <property name="segmentStyle">
-                   <enum>QLCDNumber::Flat</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="3" column="0">
-               <layout class="QGridLayout" name="gridLayout_12">
-                <item row="0" column="0">
-                 <widget class="QLCDNumber" name="lcdLeftX">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
-                  </property>
-                  <property name="digitCount">
-                   <number>5</number>
-                  </property>
-                  <property name="segmentStyle">
-                   <enum>QLCDNumber::Flat</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="lbButton">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton:disabled {color:#000000;}</string>
-                </property>
-                <property name="text">
-                 <string>LB</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="3">
-               <layout class="QGridLayout" name="gridLayout_10">
-                <item row="0" column="0">
-                 <widget class="QLCDNumber" name="lcdRightX">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
-                  </property>
-                  <property name="segmentStyle">
-                   <enum>QLCDNumber::Flat</enum>
-                  </property>
-                  <property name="value" stdset="0">
-                   <double>0.000000000000000</double>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="5" column="0">
-               <layout class="QGridLayout" name="gridLayout_11">
-                <item row="0" column="0">
-                 <widget class="QLCDNumber" name="lcdLeftY">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
-                  </property>
-                  <property name="smallDecimalPoint">
-                   <bool>false</bool>
-                  </property>
-                  <property name="segmentStyle">
-                   <enum>QLCDNumber::Flat</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="6" column="3">
-               <widget class="QLabel" name="label_3">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Right Stick X</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QPushButton" name="rbButton">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton:disabled {color:#000000;}</string>
-                </property>
-                <property name="text">
-                 <string>RB</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Left Stick X</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1" rowspan="7" colspan="2">
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="1" colspan="2">
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="0">
-               <widget class="QProgressBar" name="ltProgressBar">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="3" rowspan="4">
-               <layout class="QGridLayout" name="gridLayout_8">
-                <item row="1" column="0">
-                 <widget class="QPushButton" name="xButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
-                  </property>
-                  <property name="text">
-                   <string>X</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QPushButton" name="bButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
-                  </property>
-                  <property name="text">
-                   <string>B</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QPushButton" name="aButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
-                  </property>
-                  <property name="text">
-                   <string>A</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="yButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>40</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
-                  </property>
-                  <property name="text">
-                   <string>Y</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="3">
-               <widget class="QProgressBar" name="rtProgressBar">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximum">
-                 <number>100</number>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-                <property name="invertedAppearance">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
         <widget class="QWidget" name="tab_6">
          <attribute name="title">
           <string>Communication</string>
@@ -1186,10 +776,16 @@
                </item>
                <item row="1" column="0" colspan="3">
                 <widget class="QLabel" name="SerialConnectLabel">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>15</height>
+                   <height>20</height>
                   </size>
                  </property>
                  <property name="font">
@@ -1249,7 +845,7 @@
                  <item row="0" column="1">
                   <widget class="QLineEdit" name="hostIPLineEdit">
                    <property name="text">
-                    <string>192.168.1.101</string>
+                    <string>192.168.0.16</string>
                    </property>
                   </widget>
                  </item>
@@ -1266,7 +862,7 @@
                     <number>100000</number>
                    </property>
                    <property name="value">
-                    <number>9100</number>
+                    <number>8266</number>
                    </property>
                   </widget>
                  </item>
@@ -1281,10 +877,16 @@
                </item>
                <item row="1" column="0" colspan="3">
                 <widget class="QLabel" name="TCPConnectLabel">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>15</height>
+                   <height>20</height>
                   </size>
                  </property>
                  <property name="font">
@@ -1304,6 +906,499 @@
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_5">
+         <attribute name="title">
+          <string>Joystick</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <item row="2" column="3" rowspan="4">
+               <layout class="QGridLayout" name="gridLayout_8">
+                <item row="1" column="0">
+                 <widget class="QPushButton" name="xButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
+                  </property>
+                  <property name="text">
+                   <string>X</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QPushButton" name="bButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
+                  </property>
+                  <property name="text">
+                   <string>B</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QPushButton" name="aButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
+                  </property>
+                  <property name="text">
+                   <string>A</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="yButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton:disabled {color:#000000;}</string>
+                  </property>
+                  <property name="text">
+                   <string>Y</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="6" column="0" rowspan="4">
+               <widget class="QDial" name="dPad">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>360</number>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+                <property name="wrapping">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1" rowspan="7" colspan="2">
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="rbButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton:disabled {color:#000000;}</string>
+                </property>
+                <property name="text">
+                 <string>RB</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <layout class="QGridLayout" name="gridLayout_12">
+                <item row="0" column="0">
+                 <widget class="QLCDNumber" name="lcdLeftX">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="digitCount">
+                   <number>5</number>
+                  </property>
+                  <property name="segmentStyle">
+                   <enum>QLCDNumber::Flat</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="6" column="3">
+               <widget class="QLabel" name="label_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Right Stick X</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="2">
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="9" column="3">
+               <layout class="QGridLayout" name="gridLayout_6">
+                <item row="0" column="0">
+                 <widget class="QLCDNumber" name="lcdRightY">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="smallDecimalPoint">
+                   <bool>false</bool>
+                  </property>
+                  <property name="segmentStyle">
+                   <enum>QLCDNumber::Flat</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="7" column="3">
+               <layout class="QGridLayout" name="gridLayout_10">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetMaximumSize</enum>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLCDNumber" name="lcdRightX">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="baseSize">
+                   <size>
+                    <width>0</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="segmentStyle">
+                   <enum>QLCDNumber::Flat</enum>
+                  </property>
+                  <property name="value" stdset="0">
+                   <double>0.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Left Stick Y</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="lbButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton:disabled {color:#000000;}</string>
+                </property>
+                <property name="text">
+                 <string>LB</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <layout class="QGridLayout" name="gridLayout_11">
+                <item row="0" column="0">
+                 <widget class="QLCDNumber" name="lcdLeftY">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="smallDecimalPoint">
+                   <bool>false</bool>
+                  </property>
+                  <property name="mode">
+                   <enum>QLCDNumber::Dec</enum>
+                  </property>
+                  <property name="segmentStyle">
+                   <enum>QLCDNumber::Flat</enum>
+                  </property>
+                  <property name="value" stdset="0">
+                   <double>0.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Left Stick X</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QProgressBar" name="ltProgressBar">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="3">
+               <widget class="QLabel" name="label_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Right Stick Y</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QProgressBar" name="rtProgressBar">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="value">
+                 <number>0</number>
+                </property>
+                <property name="invertedAppearance">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_4">
+         <attribute name="title">
+          <string>OTA Update</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_14">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="2" column="1">
+             <widget class="QPushButton" name="pushButton_3">
+              <property name="text">
+               <string>Process Firmware</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="firmwareSelectButton">
+              <property name="text">
+               <string>Select File</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLineEdit" name="firmwarePath">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QTextEdit" name="FirmwareTextEdit">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="html">
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.SF NS Text';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
              </widget>
             </item>
            </layout>

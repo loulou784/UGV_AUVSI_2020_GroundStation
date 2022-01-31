@@ -26,7 +26,6 @@ typedef struct __attribute__((__packed__)) {
     float fTemperature;
     float fHumidity;
     float fPressure;
-    uint8_t u8Cal;
 } oBME280Data_t, *poBME280Data_t;
 
 typedef struct __attribute__((__packed__)) {
@@ -39,11 +38,14 @@ typedef struct __attribute__((__packed__)) {
     float fBearing;
     float fSpeed;
     float fTargetDistance;
-    float fStartAltitude;
+    float fAltitude;
+    float fStartPressure;
     uint16_t u16LeftSpeed;
+    uint8_t u8LeftDirection;
     uint16_t u16RightSpeed;
+    uint8_t u8RightDirection;
     uint32_t u32Time;
-    uint8_t u8Battery;
+    uint32_t u32Battery;
     uint8_t u8Mode;
     uint8_t u8EStop;
 } oVehiculeData_t, *poVehiculeData_t;
@@ -66,5 +68,16 @@ typedef struct __attribute__((__packed__)) {
     bool bSound;                                //Enables or disables sound, true = enabled
     bool bExternalTelemetry;                    //Uses external telemetry, true = external
 } oConfig_t, *poConfig_t;
+
+typedef struct __attribute__((__packed__)) {
+    uint32_t u32Timestamp;
+} oHeartbeatData_t, *poHeartbeatData_t;
+
+typedef struct __attribute__((__packed__)) {
+    uint16_t u16LeftSpeed;
+    uint8_t u8LeftDirection;
+    uint16_t u16RightSpeed;
+    uint8_t u8RightDirection;
+} oMotorSpeedData_t, *poMotorSpeedData_t;
 
 #endif // DATATYPES_H

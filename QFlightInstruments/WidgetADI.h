@@ -52,7 +52,7 @@
 
 #include <QWidget>
 
-#include "qflightinstruments/qfi_ADI.h"
+#include "QFlightInstruments/qfi_ADI.h"
 
 #include "LayoutSquare.h"
 

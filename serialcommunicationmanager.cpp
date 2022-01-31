@@ -49,7 +49,8 @@ void SerialCommunicationManager::serialReadyRead() {
 bool SerialCommunicationManager::sendData(uint8_t *data, uint8_t len) {
     if(m_serialPort != nullptr) {
         if(m_serialPort->isOpen()) {
-            return len == m_serialPort->write((const char*)data, len);
+            m_serialPort->write((const char*)data, len);
+            return true;
         } else {
             disconnectSerial();
             return false;

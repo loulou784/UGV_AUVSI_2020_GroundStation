@@ -57,7 +57,7 @@
 
 #include <math.h>
 
-#include "qflightinstruments/qfi_TC.h"
+#include "QFlightInstruments/qfi_TC.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -95,10 +95,12 @@ qfi_TC::qfi_TC( QWidget *parent ) :
     reset();
 
     m_scene = new QGraphicsScene( this );
-    m_scene->setBackgroundBrush(QBrush(QColor(252,252,252,255), Qt::SolidPattern));
+    m_scene->setBackgroundBrush(QBrush(QColor(227,227,227,255), Qt::SolidPattern));
     setScene( m_scene );
 
     m_scene->clear();
+
+    this->setStyleSheet("border: none;");
 
     init();
 }

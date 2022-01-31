@@ -79,7 +79,6 @@ void ControllerManager::controllerStateUpdate() {
     QVariant data;
     data.setValue(this->cState);
     emit controllerStateChanged(data);
-    // TODO: Send button struct when needed
 }
 
 ControllerManager::~ControllerManager()

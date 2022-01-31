@@ -49,7 +49,7 @@
 #define WIDGETNAV_CPP
 #endif
 
-#include "qflightinstruments/WidgetNAV.h"
+#include "QFlightInstruments/WidgetNAV.h"
 #include "ui_WidgetNAV.h"
 
 ////////////////////////////////////////////////////////////////////////////////
